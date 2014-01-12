@@ -53,6 +53,14 @@
             android:text="@string/login"
             android:layout_weight="1"
             android:onClick="login" />
+        
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registerLogin"
+            android:layout_weight="1"
+            android:onClick="register" />
 
         <CheckBox
             android:id="@+id/checkBox1"

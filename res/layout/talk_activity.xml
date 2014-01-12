@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0099cc" >
+    
+    <TextView
+        android:id="@+id/words"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="top"
+        android:textColor="#000"
+        android:background="#fff"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/loginTextSize"
+        android:padding="@dimen/loginPadding"
+        android:layout_marginLeft="@dimen/loginLayoutMarginLeft"
+        android:layout_marginRight="@dimen/loginLayoutMarginLeft"
+        android:layout_marginTop="@dimen/loginLayoutMarginTop"
+        android:layout_marginBottom="@dimen/loginLayoutMarginTop"/>
+    
+    <EditText
+        android:id="@+id/reply"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="top"
+        android:hint="@string/IhaveWordsToSay"
+        android:textColor="#000"
+        android:background="#fff"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/loginTextSize"
+        android:padding="@dimen/loginPadding"
+        android:layout_marginLeft="@dimen/loginLayoutMarginLeft"
+        android:layout_marginRight="@dimen/loginLayoutMarginLeft"
+        android:layout_marginTop="@dimen/loginLayoutMarginTop"
+        android:layout_marginBottom="@dimen/loginLayoutMarginTop"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/loginPadding"
+        android:layout_marginLeft="@dimen/loginLayoutMarginLeft"
+        android:layout_marginRight="@dimen/loginLayoutMarginLeft"
+        android:layout_marginTop="@dimen/loginLayoutMarginTop"
+        android:layout_marginBottom="@dimen/loginLayoutMarginTop"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="throwIt"
+            android:text="@string/throwBack" />
+
+    </LinearLayout>
+</LinearLayout>

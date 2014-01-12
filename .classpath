@@ -4,6 +4,15 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="F:/android开发/AvosCloud/sdk/avossns-v2.1.2.jar"/>
+	<classpathentry kind="lib" path="F:/android开发/AvosCloud/sdk/fastjson.jar"/>
+	<classpathentry kind="lib" path="F:/android开发/AvosCloud/sdk/httpmime-4.2.4.jar"/>
+	<classpathentry kind="lib" path="F:/android开发/AvosCloud/sdk/qq.sdk.1.6.1.jar"/>
+	<classpathentry kind="lib" path="F:/android开发/AvosCloud/sdk/weibo.sdk.android.sso.jar"/>
+	<classpathentry kind="lib" path="F:/android开发/AvosCloud/sdk/android-async-http-1.4.3.jar"/>
+	<classpathentry kind="lib" path="F:/android开发/AvosCloud/sdk/AndroidSDKComponent.jar"/>
+	<classpathentry kind="lib" path="F:/android开发/AvosCloud/sdk/avoscloud-v2.1.2.jar"/>
+	<classpathentry kind="lib" path="F:/android开发/AvosCloud/sdk/avospush-v2.1.2.jar"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

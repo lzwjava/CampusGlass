@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <group>
+        <item
+            android:id="@+id/throwGlass"
+            android:title="@string/throwGlass"
+            android:onClick="throwGlass">
+        </item>
+    </group>
+    
+    <group>
+        <item
+            android:id="@+id/registerLogin"
+            android:title="@string/logOff">
+        </item>
+    </group>
+
+</menu>

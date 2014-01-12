@@ -1,0 +1,13 @@
+curl -X POST \
+  -H "X-AVOSCloud-Application-Id: cf7jivx0e2iqa9iieqowbiqzparou16k8moz03t3opgvitox"          \
+  -H "X-AVOSCloud-Application-Key: ow95gi3zpx8nb34rphwggu6m0dlgay1wknedwskm0v20f207"        \
+  -H "Content-Type: application/json" \
+  -d '{
+        "channels":[ "public"],
+        "data": {
+          "action": "com.avos.UPDATE_STATUS"
+          "name": "avos cloud."
+        }
+      }' \
+  https://cn.avoscloud.com/1/push
+	
