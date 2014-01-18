@@ -39,6 +39,7 @@ public class GlassRoomActivity extends Activity {
 		
 		AVAnalytics.trackAppOpened(getIntent());
 		PushService.setDefaultPushCallback(this, GlassRoomActivity.class);
+		PushService.subscribe(this,"public",GlassRoomActivity.class);
 		AVInstallation.getCurrentInstallation().saveInBackground();
 		
 		checkIfOldUser(); 
@@ -120,8 +121,7 @@ public class GlassRoomActivity extends Activity {
 					dialogHaveNone();
 				}
 			}
-		});
-		
+		}); 
 	}
 	
 	void dialogHaveNone(){
@@ -139,7 +139,7 @@ public class GlassRoomActivity extends Activity {
 						Intent intent=new Intent();
 						intent.putExtra("words",words);
 						intent.putExtra("installationId",id);
-						intent.setClass(GlassRoomActivity.this, TalkActivity.class);
+						intent.setClass(GlassRoomActivity.this, ChatActivity.class);
 						startActivity(intent);
 					}
 				}).setNegativeButton("к╓ак", new OnClickListener(){

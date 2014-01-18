@@ -7,10 +7,12 @@
     <EditText
         android:id="@+id/searchWord"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/pleaseInputSearchWord"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:hint="@string/pleaseInputSearchWord" 
         android:textColor="#000"
-        android:background="#fff"
+        android:background="#82E0FF"
+        android:gravity="top"
         android:textCursorDrawable="@null"
         android:textSize="@dimen/loginTextSize"
         android:padding="@dimen/loginPadding"
@@ -21,7 +23,8 @@
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         android:padding="@dimen/loginPadding"
         android:layout_marginLeft="@dimen/loginLayoutMarginLeft"
         android:layout_marginRight="@dimen/loginLayoutMarginLeft"

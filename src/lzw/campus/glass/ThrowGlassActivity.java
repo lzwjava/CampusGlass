@@ -79,31 +79,10 @@ public class ThrowGlassActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						pushAll();
+						//pushAll();
 						//Util.intentToClass(getApplicationContext(), GlassRoomActivity.class);
 						finish();
 					}
 				}).create().show();
-	}
-	
-	void pushAll(){
-		AVPush push=new AVPush();
-		JSONObject obj=new JSONObject();
-		try{
-		  obj.put("alert","new");
-		}catch(JSONException e){
-			e.printStackTrace();
-		}
-		push.setPushToAndroid(true);
-		push.setData(obj);
-		push.sendInBackground(new SendCallback(){
-			public void done(AVException e){
-				if(e==null){
-					
-				}else{
-					
-				}
-			}
-		});
 	}
 }

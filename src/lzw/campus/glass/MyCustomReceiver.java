@@ -17,7 +17,8 @@ public class MyCustomReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		LogUtil.log.d(TAG, "Get Broadcat");
+		//LogUtil.log.d(TAG, "Get Broadcat");
+		LogUtil.log.d(TAG, "nimei");
 		try {
 			String action = intent.getAction();
 			String channel = intent.getExtras().getString("com.avoscloud.Channel");
