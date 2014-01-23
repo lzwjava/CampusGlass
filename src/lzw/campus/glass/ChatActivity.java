@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import lzw.util.GlassUtil;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVInstallation;
-import com.avos.avoscloud.AVPush;
+import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.SendCallback;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.FindCallback;
 
 public class ChatActivity extends Activity {
 	ListView mListView;
@@ -28,6 +28,7 @@ public class ChatActivity extends Activity {
 	Button btnSend,btnBack;
 	List<ChatMsgEntity> mDataArrays=new 
 	  ArrayList<ChatMsgEntity>();
+	TextView title;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class ChatActivity extends Activity {
 		etSend=(EditText)findViewById(R.id.et_sendMessage);
 		btnSend=(Button)findViewById(R.id.btn_send);
 		btnBack=(Button)findViewById(R.id.btn_back);
+		title=(TextView)findViewById(R.id.title);
 		
 		ClickListner listner=new ClickListner();
 		btnSend.setOnClickListener(listner);
@@ -51,18 +53,56 @@ public class ChatActivity extends Activity {
 	}
 	
 	void initData(){
-	  ChatMsgEntity entity=new ChatMsgEntity();
-	  entity.text=intentGet("words");
-	  entity.name="Ta";
-	  entity.date="2014-1-1";
-	  entity.isComMsg=true;
-	  mDataArrays.add(entity);
+	  CampusGlassApp app=(CampusGlassApp)getApplication();
+	  AVObject curGlass=app.curGetGlass; 
 	  
-		mAdapter=new ChatMsgViewAdapter
-		  (this,mDataArrays);
-		mListView.setAdapter(mAdapter);
+	  final String me=AVUser.getCurrentUser().getUsername();
+	  String he=curGlass.getString("username");
+	  title.setText(he);
+	  
+    AVQuery<AVObject> query = glassQuery(me, he);
+		query.orderByAscending("createdAt");
+		query.findInBackground(new FindCallback<AVObject>() {
+			public void done(List<AVObject> glasses, AVException e) {
+				if (e == null) {
+					for(AVObject glass : glasses){
+						ChatMsgEntity entity=new ChatMsgEntity();
+						entity.text=glass.getString("words");
+						entity.name=glass.getString("username");
+						entity.date=glass.getCreatedAt().toString();
+						if(entity.name.equals(me)){
+							entity.isComMsg=false;
+						}else entity.isComMsg=true; 
+						mDataArrays.add(entity);
+					}
+					mAdapter = new ChatMsgViewAdapter(ChatActivity.this, mDataArrays);
+					mListView.setAdapter(mAdapter);
+					mListView.setSelection(mListView.getCount()-1);
+				}else{
+					e.printStackTrace();
+				}
+	  	}
+	  });
 	}
-	
+
+	AVQuery<AVObject> glassQuery(String username, String toUser) {
+		AVQuery<AVObject> query1=getEqualQuery("username", username,"toUser",toUser);
+	  AVQuery<AVObject> query2=getEqualQuery("username",toUser,"username",toUser);
+	  List<AVQuery<AVObject>> queries=new ArrayList<AVQuery<AVObject>>();
+	  queries.add(query1);
+	  queries.add(query2);
+	  AVQuery<AVObject> mainQuery=AVQuery.or(queries);
+	  return mainQuery;
+	}
+
+	AVQuery<AVObject> getEqualQuery(String... pairs) {
+		AVQuery<AVObject> query=AVQuery.getQuery("Glass");
+		for(int i=0;i<pairs.length/2;i++){
+			query.whereEqualTo(pairs[2*i],pairs[2*i+1]);
+		}
+	  return query;
+	}
+ 
 	class ClickListner implements 
 	 android.view.View.OnClickListener{
 		public void onClick(View v){
@@ -80,10 +120,12 @@ public class ChatActivity extends Activity {
 	void send(){
 		String text=etSend.getText().toString();
 		if(text.isEmpty()) return;
-		ChatMsgEntity entity=new ChatMsgEntity("人马",
-    date(),text,false);
+		String me=AVUser.getCurrentUser().getUsername();
+		ChatMsgEntity entity=new ChatMsgEntity(me,
+      date(),text,false);
 		mDataArrays.add(entity);
-		throwIt(text);
+		String toUser=getFromCurGlass(Constant.TO_USER);
+		GlassUtil.throwGlass(text, toUser);
 		etSend.setText(""); 
 		mListView.setSelection(mListView.getCount()-1);
 	}
@@ -97,9 +139,10 @@ public class ChatActivity extends Activity {
 		finish();
 	}
 	
-	String intentGet(String key){
-		Intent intent=getIntent();
-		return intent.getStringExtra(key);
+	String getFromCurGlass(String key){
+		CampusGlassApp app=(CampusGlassApp)getApplication();
+		AVObject glass=app.curGetGlass;
+		return glass.getString(key);
 	}
 	
 	@Override
@@ -119,20 +162,6 @@ public class ChatActivity extends Activity {
 			return true;
 		}
 		return false;
-	}
-	
-	public void throwIt(String reply){
-		String id=intentGet("installationId");
-		AVQuery pushQuery = AVInstallation.getQuery();
-		pushQuery.whereEqualTo("installationId", id);
-		AVPush.sendMessageInBackground(reply, pushQuery,
-				new SendCallback() {
-					@Override
-					public void done(AVException e) {
-						//toast("已回复");
-						//finish();
-					}
-				});
 	}
 	
 }

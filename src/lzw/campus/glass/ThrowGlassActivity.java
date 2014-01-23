@@ -1,8 +1,6 @@
 package lzw.campus.glass;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import lzw.util.GlassUtil;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,11 +16,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVAnalytics;
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVPush;
-import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.SendCallback;
 
 public class ThrowGlassActivity extends Activity {
 	EditText wordsEdit;
@@ -64,15 +57,10 @@ public class ThrowGlassActivity extends Activity {
 	
 	public void throwIt(View v){
 		String words=wordsEdit.getText().toString();
-		AVUser user=AVUser.getCurrentUser();
-		String id=user.getString("installationId");
-		AVObject glass=new AVObject("Glass");
-		glass.put("installationId",id);
-		glass.put("words",words);
-		glass.saveInBackground();
+		GlassUtil.throwGlass(words,null);
 		dialog();
 	}
-
+	
 	void dialog() {
 		new AlertDialog.Builder(ThrowGlassActivity.this).setTitle("亲爱的")
 				.setMessage("瓶子已经扔向大海").setPositiveButton("OK", new OnClickListener() {

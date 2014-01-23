@@ -7,6 +7,7 @@ import java.util.Random;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.PushService;
+import com.avos.avoscloud.SaveCallback;
 
 public class GlassRoomActivity extends Activity {
 	EditText searchWordEdit;
@@ -71,7 +73,6 @@ public class GlassRoomActivity extends Activity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem mi) {
-		// TODO Auto-generated method stub
 		switch(mi.getItemId()){
 			case R.id.registerLogin:
 				logOff();
@@ -96,7 +97,6 @@ public class GlassRoomActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
 		MenuInflater inflator=new MenuInflater(this);
 		inflator.inflate(R.menu.glass_room_menu,menu);
 		return super.onCreateOptionsMenu(menu);
@@ -114,8 +114,11 @@ public class GlassRoomActivity extends Activity {
 					Random rand=new Random(new Date().getTime());
 					int randId=rand.nextInt(n);
 					AVObject obj=list.get(randId);
-					String id=obj.getString("installationId");
-					dialog(obj.getString("words"),id);
+					Application app=getApplication();
+					if(app instanceof CampusGlassApp){
+						((CampusGlassApp) app).curGetGlass=obj;
+					}
+					dialog(obj.getString("words"),obj);
 				}else{
 					//e.printStackTrace();
 					dialogHaveNone();
@@ -130,17 +133,24 @@ public class GlassRoomActivity extends Activity {
 				.create().show();
 	}
 	
-	void dialog(final String words,final String id) {
+	void dialog(final String words,final AVObject glass) {
 		new AlertDialog.Builder(GlassRoomActivity.this).setTitle("Ta说")
 				.setMessage(words).setPositiveButton("向对方回一个瓶子", new OnClickListener() {
 					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-						Intent intent=new Intent();
-						intent.putExtra("words",words);
-						intent.putExtra("installationId",id);
-						intent.setClass(GlassRoomActivity.this, ChatActivity.class);
-						startActivity(intent);
+					public void onClick(DialogInterface dialog, int which) {						
+						glass.put("toUser",
+							AVUser.getCurrentUser().getUsername());
+						glass.saveInBackground(new SaveCallback(){
+							public void done(AVException e){
+							  if(e==null){ 
+							  	Intent intent=new Intent();
+						      intent.setClass(GlassRoomActivity.this, ChatActivity.class);
+						      startActivity(intent); 
+							  }else {
+							  	e.printStackTrace();
+							  }
+							}
+						}); 
 					}
 				}).setNegativeButton("摔了", new OnClickListener(){
 					public void onClick(DialogInterface dialog,int which){

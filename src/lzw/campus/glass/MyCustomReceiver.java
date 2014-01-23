@@ -18,13 +18,12 @@ public class MyCustomReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		//LogUtil.log.d(TAG, "Get Broadcat");
-		LogUtil.log.d(TAG, "nimei");
+		Util.log("receive");
 		try {
 			String action = intent.getAction();
 			String channel = intent.getExtras().getString("com.avoscloud.Channel");
 			JSONObject json = new JSONObject(intent.getExtras().getString(
 					"com.avoscloud.Data"));
-			Util.log("receive");
 			Log.d(TAG, "got action " + action + " on channel " + channel + " with:");
 			Iterator itr = json.keys();
 			while (itr.hasNext()) {

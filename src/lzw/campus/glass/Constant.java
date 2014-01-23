@@ -7,4 +7,5 @@ public class Constant{
 	public static final int wrongPassword=4;
 	public static final int InetException=5;
 	public static final String TOAST_AFTER_THROW_BACK = "toastAfterThrowBack";
+	public static final String TO_USER = "toUser";
 }
