@@ -3,9 +3,11 @@ package lzw.campus.glass;
 import android.app.Application;
 
 import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.AVObject;
 
 public class CampusGlassApp extends Application {
     private static final String LOGTAG = CampusGlassApp.class.getName();
+    public AVObject curGetGlass=null;
     @Override
     public void onCreate() {
         super.onCreate(); 

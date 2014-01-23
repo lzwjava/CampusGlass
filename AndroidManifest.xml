@@ -21,27 +21,32 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="lzw.campus.glass.GlassRoomActivity"
-            android:label="@string/app_name" > 
+            android:name=".GlassRoomActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" /> 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter> 
         </activity>
         <activity
-            android:name="lzw.campus.glass.LoginActivity"
+            android:name=".LoginActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="lzw.campus.glass.TalkActivity"
+            android:name=".TalkActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="lzw.campus.glass.ThrowGlassActivity"
+            android:name=".ThrowGlassActivity"
             android:label="@string/app_name" >
         </activity> 
         <activity
             android:name=".ChatActivity"
+            android:theme="@android:style/Theme.NoTitleBar" > 
+        </activity>
+        
+        <activity
+            android:name=".BaseActivity"
             android:theme="@android:style/Theme.NoTitleBar" > 
         </activity>
         
